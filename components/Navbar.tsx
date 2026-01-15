@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 export function Navbar() {
     return (
-        <div className="w-full">
+        <div className="w-full sticky top-0 z-50">
             <nav className="flex items-center justify-between px-6 py-4 bg-slate-950 border-b border-white/5">
                 <Link href="/" className="flex items-center group">
                     <span className="text-2xl font-semibold tracking-tight text-blue-500">Tess</span>
