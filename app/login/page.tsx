@@ -70,7 +70,7 @@ export default function LoginPage() {
                                 <button
                                     type="button"
                                     onClick={() => setShowPassword(!showPassword)}
-                                    className="absolute right-4 top-12 -translate-y-6"
+                                    className="absolute right-4 top-1/2 -translate-y-1/2"
                                 >
                                     <img alt="visibility" src="/icons/u_eye.png" className="w-4 h-4" />
                                 </button>
@@ -79,49 +79,44 @@ export default function LoginPage() {
                             <div className="flex items-center justify-between pb-2">
                                 <label className="flex items-center gap-2.5 cursor-pointer">
                                     <div className="relative flex items-center">
-                                        <input type="checkbox" className="w-4 h-4 opacity-0 absolute cursor-pointer" />
-                                        <div className="w-4 h-4 border border-slate-300 rounded">
-                                            <svg className="w-full h-full text-white scale-75" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
-                                        </div>
+                                        <input type="checkbox" className="hidden" />
+                                        <div className="w-4 h-4 border border-gray-300 rounded"></div>
                                     </div>
-                                    <span className="text-xs text-slate-500 font-medium">Keep me signed in</span>
+                                    <span className="text-xs text-gray-500 font-medium">Keep me signed in</span>
                                 </label>
-                                <Link href="#" className="text-xs font-semibold text-indigo-500">
+                                <Link href="#" className="text-xs font-medium text-[#7D79E6]">
                                     Forgot password?
                                 </Link>
                             </div>
 
-                            <button
-                                type="submit"
-                                className="w-full py-3 text-white bg-[#1A82E0] text-sm font-bold rounded-full"
-                            >
+                            <button type="submit" className="w-full py-3 text-white bg-[#1A82E0] text-sm font-bold rounded-full">
                                 Login
                             </button>
                         </form>
 
                         <div className="w-full flex items-center gap-3 my-6">
-                            <div className="h-px flex-1 bg-slate-200" />
-                            <span className="text-xs font-bold text-slate-400 tracking-widest">OR</span>
-                            <div className="h-px flex-1 bg-slate-200" />
+                            <div className="h-px flex-1 bg-gray-200" />
+                            <span className="text-xs font-medium text-gray-500 tracking-widest">OR</span>
+                            <div className="h-px flex-1 bg-gray-200" />
                         </div>
 
                         <div className="w-full space-y-3">
-                            <button className="w-full py-2.5 px-4 rounded-full border border-[#7D79E6] text-[#7D79E6] text-xs font-semibold flex items-center justify-center gap-2.5">
+                            <button className="w-full py-2.5 px-4 rounded-full border border-[#7D79E6] text-[#7D79E6] text-xs font-medium flex items-center justify-center gap-2.5">
                                 <img src="/icons/google.png" alt="Google" className="w-4 h-4" />
                                 Continue with Google
                             </button>
-                            <button className="w-full py-2.5 px-4 rounded-full border border-[#7D79E6] text-[#7D79E6] text-xs font-semibold flex items-center justify-center gap-2.5">
+                            <button className="w-full py-2.5 px-4 rounded-full border border-[#7D79E6] text-[#7D79E6] text-xs font-medium flex items-center justify-center gap-2.5">
                                 <img src="/icons/microsoft.png" alt="Microsoft" className="w-4 h-4" />
                                 Continue with Microsoft
                             </button>
                         </div>
 
-                        <div className="mt-10 text-xs text-black font-medium">
-                            Don't have an account? <Link href="#" className="font-bold text-[#7D79E6]">Register for free</Link>
+                        <div className="mt-10 text-xs text-black font-medium flex items-center justify-center gap-2">
+                            Don't have an account? <Link href="#" className="font-medium text-[#7D79E6]">Register for free</Link>
                         </div>
                     </div>
 
-                    <div className="mt-auto pt-4 text-center text-xs text-black font-semibold tracking-wider pb-8">
+                    <div className="mt-auto pt-4 text-center text-xs text-gray-500 font-medium tracking-wider pb-8">
                         Powered by 100Thinkers © 2025
                     </div>
                 </div>
