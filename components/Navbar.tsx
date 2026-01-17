@@ -1,7 +1,10 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { auth, signOut } from '@/lib/auth';
 
-export function Navbar() {
+export async function Navbar() {
+    const session = await auth();
+
     return (
         <div className="w-full sticky top-0 z-50">
             <nav className="flex items-center justify-between px-6 py-4 bg-slate-950 border-b border-white/5">
@@ -24,12 +27,28 @@ export function Navbar() {
                     </div>
 
                     <div className="flex items-center gap-3">
-                        <Link href="/login" className="px-5 py-2 text-sm font-medium text-white border border-white rounded-full hover:bg-white/5 hover:border-gray-500 hover:text-white transition-all active:translate-y-[1px]">
-                            Login
-                        </Link>
-                        <button className="px-6 py-2 text-sm font-medium text-white bg-blue-600 rounded-full hover:bg-blue-700 transition-colors shadow-lg shadow-blue-900/20 active:translate-y-[1px]">
-                            Try for free
-                        </button>
+                        {session ? (
+                            <div className="flex items-center gap-3">
+                                <span className="text-sm text-white font-medium">Hello, {session.user?.name || session.user?.email}</span>
+                                <form action={async () => {
+                                    'use server';
+                                    await signOut();
+                                }}>
+                                    <button className="px-5 py-2 text-sm font-medium text-white border border-white rounded-full hover:bg-white/5 hover:border-gray-500 hover:text-white transition-all active:translate-y-[1px]">
+                                        Sign Out
+                                    </button>
+                                </form>
+                            </div>
+                        ) : (
+                            <>
+                                <Link href="/login" className="px-5 py-2 text-sm font-medium text-white border border-white rounded-full hover:bg-white/5 hover:border-gray-500 hover:text-white transition-all active:translate-y-[1px]">
+                                    Login
+                                </Link>
+                                <button className="px-6 py-2 text-sm font-medium text-white bg-blue-600 rounded-full hover:bg-blue-700 transition-colors shadow-lg shadow-blue-900/20 active:translate-y-[1px]">
+                                    Try for free
+                                </button>
+                            </>
+                        )}
                     </div>
 
                 </div>
