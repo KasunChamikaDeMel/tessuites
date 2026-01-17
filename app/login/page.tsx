@@ -11,9 +11,9 @@ export default function LoginPage() {
             <div className="flex flex-col lg:flex-row min-h-screen">
 
                 <div className="hidden lg:flex lg:w-1/2 bg-black flex-col justify-between p-12 relative overflow-hidden">
-                    <video src="/videos/3d_Sphere.mp4" autoPlay loop playsInline className="absolute inset-0 w-full h-full object-cover opacity-80 pointer-events-none z-0" />
+                    <video src="/videos/3d_Sphere.mp4" autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover opacity-80 z-0" />
 
-                    <div className="absolute inset-0 pointer-events-none z-0">
+                    <div className="absolute inset-0 z-0">
                         <div className="absolute top-24 left-24 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl" />
                     </div>
 
@@ -39,7 +39,7 @@ export default function LoginPage() {
 
                 <div className="w-full lg:w-1/2 flex flex-col relative lg:bg-white min-h-screen lg:min-h-0">
                     <div className="flex justify-between items-center w-full px-6 lg:px-10 py-4">
-                        <Link href="/" className="px-4 py-1.5 rounded-full border border-slate-200 text-xs font-medium text-slate-600 flex items-center gap-2 hover:bg-slate-50 transition-all active:scale-95">
+                        <Link href="/" className="px-4 py-1.5 rounded-full border border-slate-200 text-xs font-medium text-slate-600 flex items-center gap-2">
                             <span className="text-m">&lt;</span>
                             Back
                         </Link>
@@ -77,16 +77,16 @@ export default function LoginPage() {
                             </div>
 
                             <div className="flex items-center justify-between pb-2">
-                                <label className="flex items-center gap-2.5 cursor-pointer group">
+                                <label className="flex items-center gap-2.5 cursor-pointer">
                                     <div className="relative flex items-center">
-                                        <input type="checkbox" className="peer w-4 h-4 opacity-0 absolute cursor-pointer" />
-                                        <div className="w-4 h-4 border border-slate-300 rounded peer-checked:bg-indigo-500 peer-checked:border-indigo-500">
+                                        <input type="checkbox" className="w-4 h-4 opacity-0 absolute cursor-pointer" />
+                                        <div className="w-4 h-4 border border-slate-300 rounded">
                                             <svg className="w-full h-full text-white scale-75" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
                                         </div>
                                     </div>
                                     <span className="text-xs text-slate-500 font-medium">Keep me signed in</span>
                                 </label>
-                                <Link href="#" className="text-xs font-semibold text-indigo-500 hover:underline transition-all">
+                                <Link href="#" className="text-xs font-semibold text-indigo-500">
                                     Forgot password?
                                 </Link>
                             </div>
@@ -106,22 +106,22 @@ export default function LoginPage() {
                         </div>
 
                         <div className="w-full space-y-3">
-                            <button className="w-full py-2.5 px-4 rounded-full border border-indigo-500/30 text-indigo-500 text-xs font-semibold flex items-center justify-center gap-2.5 hover:bg-indigo-50 transition-all active:scale-95">
+                            <button className="w-full py-2.5 px-4 rounded-full border border-[#7D79E6] text-[#7D79E6] text-xs font-semibold flex items-center justify-center gap-2.5">
                                 <img src="/icons/google.png" alt="Google" className="w-4 h-4" />
                                 Continue with Google
                             </button>
-                            <button className="w-full py-2.5 px-4 rounded-full border border-indigo-500/30 text-indigo-500 text-xs font-semibold flex items-center justify-center gap-2.5 hover:bg-indigo-50 transition-all active:scale-95">
+                            <button className="w-full py-2.5 px-4 rounded-full border border-[#7D79E6] text-[#7D79E6] text-xs font-semibold flex items-center justify-center gap-2.5">
                                 <img src="/icons/microsoft.png" alt="Microsoft" className="w-4 h-4" />
                                 Continue with Microsoft
                             </button>
                         </div>
 
-                        <div className="mt-10 text-xs text-slate-500 font-medium">
-                            Don't have an account? <Link href="#" className="font-bold text-indigo-500 hover:underline transition-all">Register for free</Link>
+                        <div className="mt-10 text-xs text-black font-medium">
+                            Don't have an account? <Link href="#" className="font-bold text-[#7D79E6]">Register for free</Link>
                         </div>
                     </div>
 
-                    <div className="mt-auto pt-4 text-center text-xs text-slate-400 font-semibold tracking-wider pb-8">
+                    <div className="mt-auto pt-4 text-center text-xs text-black font-semibold tracking-wider pb-8">
                         Powered by 100Thinkers © 2025
                     </div>
                 </div>
