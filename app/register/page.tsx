@@ -2,13 +2,13 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
-import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
-export default function LoginPage() {
-    const [showPassword, setShowPassword] = useState(false);
+export default function RegisterPage() {
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const router = useRouter();
@@ -19,17 +19,17 @@ export default function LoginPage() {
         setError('');
 
         try {
-            const result = await signIn('credentials', {
-                redirect: false,
-                email,
-                password,
+            const res = await fetch('/api/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, email, password }),
             });
 
-            if (result?.error) {
-                setError('Invalid email or password');
+            if (res.ok) {
+                router.push('/login');
             } else {
-                router.push('/'); // Redirect to home or dashboard
-                router.refresh();
+                const data = await res.json();
+                setError(data.error || 'Registration failed');
             }
         } catch (err) {
             setError('Something went wrong');
@@ -38,14 +38,9 @@ export default function LoginPage() {
         }
     };
 
-    const handleSocialLogin = (provider: string) => {
-        signIn(provider, { callbackUrl: '/' });
-    };
-
     return (
         <div className="relative min-h-screen bg-white font-sans">
             <div className="flex flex-col lg:flex-row min-h-screen">
-
                 <div className="hidden lg:flex lg:w-1/2 bg-black flex-col justify-between p-12 relative overflow-hidden">
                     <video src="/videos/3d_Sphere.mp4" autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover opacity-80 z-0" />
 
@@ -55,10 +50,10 @@ export default function LoginPage() {
 
                     <div className="relative z-10 mt-4">
                         <h1 className="text-3xl lg:text-4xl font-medium text-white mb-4 leading-tight tracking-tight max-w-m">
-                            Welcome back to smarter workflows
+                            Join smarter workflows
                         </h1>
                         <p className="text-gray-400 text-base leading-relaxed max-w-m">
-                            Sign in to access your tools, data and insights across the 100Thinkers suite.
+                            Create an account to access ecosystem.
                         </p>
                     </div>
 
@@ -88,7 +83,7 @@ export default function LoginPage() {
                     </div>
 
                     <div className="flex-1 flex flex-col justify-start max-w-80 mx-auto w-full px-6 pt-8 pb-12">
-                        <h2 className="text-3xl font-semibold text-black mb-8 tracking-tight self-start">Login</h2>
+                        <h2 className="text-3xl font-semibold text-black mb-8 tracking-tight self-start">Create Account</h2>
 
                         <form className="w-full space-y-4" onSubmit={handleSubmit}>
                             {error && (
@@ -96,6 +91,15 @@ export default function LoginPage() {
                                     {error}
                                 </div>
                             )}
+                            <div className="space-y-1">
+                                <input
+                                    type="text" placeholder="Full Name"
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                    required
+                                    className="w-full px-4 py-3 text-black rounded-lg border border-gray-300"
+                                />
+                            </div>
                             <div className="space-y-1">
                                 <input
                                     type="email" placeholder="Email"
@@ -123,53 +127,17 @@ export default function LoginPage() {
                                 </button>
                             </div>
 
-                            <div className="flex items-center justify-between pb-2">
-                                <label className="flex items-center gap-2.5 cursor-pointer">
-                                    <div className="relative flex items-center">
-                                        <input type="checkbox" className="hidden" />
-                                        <div className="w-4 h-4 border border-gray-300 rounded"></div>
-                                    </div>
-                                    <span className="text-xs text-gray-500 font-medium">Keep me signed in</span>
-                                </label>
-                                <Link href="#" className="text-xs font-medium text-[#7D79E6]">
-                                    Forgot password?
-                                </Link>
-                            </div>
-
                             <button
                                 type="submit"
                                 disabled={loading}
                                 className="w-full py-3 text-white bg-[#1A82E0] text-sm font-bold rounded-full disabled:opacity-50"
                             >
-                                {loading ? 'Logging in...' : 'Login'}
+                                {loading ? 'Creating account...' : 'Sign Up'}
                             </button>
                         </form>
 
-                        <div className="w-full flex items-center gap-3 my-6">
-                            <div className="h-px flex-1 bg-gray-200" />
-                            <span className="text-xs font-medium text-gray-500 tracking-widest">OR</span>
-                            <div className="h-px flex-1 bg-gray-200" />
-                        </div>
-
-                        <div className="w-full space-y-3">
-                            <button
-                                onClick={() => handleSocialLogin('google')}
-                                className="w-full py-2.5 px-4 rounded-full border border-[#7D79E6] text-[#7D79E6] text-xs font-medium flex items-center justify-center gap-2.5"
-                            >
-                                <img src="/icons/google.png" alt="Google" className="w-4 h-4" />
-                                Continue with Google
-                            </button>
-                            <button
-                                onClick={() => handleSocialLogin('microsoft-entra-id')}
-                                className="w-full py-2.5 px-4 rounded-full border border-[#7D79E6] text-[#7D79E6] text-xs font-medium flex items-center justify-center gap-2.5"
-                            >
-                                <img src="/icons/microsoft.png" alt="Microsoft" className="w-4 h-4" />
-                                Continue with Microsoft
-                            </button>
-                        </div>
-
                         <div className="mt-10 text-xs text-black font-medium flex items-center justify-center gap-2">
-                            Don't have an account? <Link href="/register" className="font-medium text-[#7D79E6]">Register for free</Link>
+                            Already have an account? <Link href="/login" className="font-medium text-[#7D79E6]">Login</Link>
                         </div>
                     </div>
 
