@@ -2,6 +2,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import crypto from 'crypto';
+import { sendPasswordResetEmail } from "@/lib/mail";
 
 export async function POST(req: Request) {
     try {
@@ -32,13 +33,14 @@ export async function POST(req: Request) {
             }
         });
 
-        // In a real app, send email here.
-        // For development, we log the link.
-        const resetLink = `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/reset-password?token=${resetToken}`;
-        console.log("----------------------------------------------");
-        console.log("PASSWORD RESET LINK (DEV ONLY):");
-        console.log(resetLink);
-        console.log("----------------------------------------------");
+        // Send real email using Resend
+        try {
+            await sendPasswordResetEmail(email, resetToken);
+        } catch (mailError) {
+            console.error("Failed to send reset email:", mailError);
+            // We still return success to the user for security, 
+            // but we log the error internally.
+        }
 
         return NextResponse.json({ message: "Reset link sent" });
 
