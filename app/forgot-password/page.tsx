@@ -4,26 +4,26 @@ import Link from 'next/link';
 import { useState } from 'react';
 
 export default function ForgotPasswordPage() {
-    const [email, setEmail] = useState('');
-    const [loading, setLoading] = useState(false);
-    const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
+    const [email, setEmail] = useState('');                         // Email input state
+    const [loading, setLoading] = useState(false);                     // Loading state for form submission
+    const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);       // Feedback message state
+
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
         setMessage(null);
 
-        try {
+        try {                                  // Send request to forgot-password API
             const res = await fetch('/api/forgot-password', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email }),
             });
 
+
             if (res.ok) {
-                setMessage({ type: 'success', text: 'If an account exists, a reset link has been sent.' });
-                // In a real app, this is where the email is sent.
-                // For this demo, we'll verify if the token was created in the console.
+                setMessage({ type: 'success', text: 'A reset link has been sent.' });
             } else {
                 setMessage({ type: 'error', text: 'Something went wrong. Please try again.' });
             }

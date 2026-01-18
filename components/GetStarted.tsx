@@ -1,6 +1,7 @@
 
 
 export function GetStarted() {
+
     return (
         <section className="py-24 bg-blue-100">
             <div className="container mx-auto px-4 text-center">

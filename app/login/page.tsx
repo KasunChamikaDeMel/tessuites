@@ -6,29 +6,27 @@ import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {
-    const [showPassword, setShowPassword] = useState(false);
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState('');
-    const router = useRouter();
+    const [showPassword, setShowPassword] = useState(false);              // password visibility
+    const [email, setEmail] = useState('');                                // Email input state
+    const [password, setPassword] = useState('');                          // Password input state
+    const [loading, setLoading] = useState(false);                          // Form submission state
+    const [error, setError] = useState('');                                // Error message state
+    const router = useRouter();                                             // Router for redirection
+
 
     const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
+        e.preventDefault();                                  // Prevent default form behavior
+
         setLoading(true);
         setError('');
 
-        try {
-            const result = await signIn('credentials', {
-                redirect: false,
-                email,
-                password,
-            });
+        try {                                                      // Call NextAuth signIn with credentials
+            const result = await signIn('credentials', { redirect: false, email, password });
 
             if (result?.error) {
                 setError('Invalid email or password');
             } else {
-                router.push('/'); // Redirect to home or dashboard
+                router.push('/');                           // Redirect
                 router.refresh();
             }
         } catch (err) {
@@ -39,8 +37,9 @@ export default function LoginPage() {
     };
 
     const handleSocialLogin = (provider: string) => {
-        signIn(provider, { callbackUrl: '/' });
+        signIn(provider, { callbackUrl: '/' });                       // Trigger OAuth social login
     };
+
 
     return (
         <div className="relative min-h-screen bg-white font-sans">
@@ -154,14 +153,14 @@ export default function LoginPage() {
                         <div className="w-full space-y-3">
                             <button
                                 onClick={() => handleSocialLogin('google')}
-                                className="w-full py-2.5 px-4 rounded-full border border-[#7D79E6] text-[#7D79E6] text-xs font-medium flex items-center justify-center gap-2.5"
+                                className="w-full py-2.5 px-4 rounded-full border border-[#7D79E6] text-[#7D79E6] text-xs font-medium flex items-center justify-center gap-2.5 hover:bg-blue-600 hover:text-white transition-colors duration-200"
                             >
                                 <img src="/icons/google.png" alt="Google" className="w-4 h-4" />
                                 Continue with Google
                             </button>
                             <button
                                 onClick={() => handleSocialLogin('microsoft-entra-id')}
-                                className="w-full py-2.5 px-4 rounded-full border border-[#7D79E6] text-[#7D79E6] text-xs font-medium flex items-center justify-center gap-2.5"
+                                className="w-full py-2.5 px-4 rounded-full border border-[#7D79E6] text-[#7D79E6] text-xs font-medium flex items-center justify-center gap-2.5 hover:bg-blue-600 hover:text-white transition-colors duration-200"
                             >
                                 <img src="/icons/microsoft.png" alt="Microsoft" className="w-4 h-4" />
                                 Continue with Microsoft

@@ -5,14 +5,15 @@ import { useState, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 
 function ResetPasswordForm() {
-    const searchParams = useSearchParams();
-    const token = searchParams.get('token');
-    const router = useRouter();
+    const searchParams = useSearchParams();               // Hook to access URL query parameters
+    const token = searchParams.get('token');           // Extract the reset token from URL
+    const router = useRouter();                             // Router for post-reset redirection
 
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
-    const [loading, setLoading] = useState(false);
-    const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
+    const [password, setPassword] = useState('');                        // New password state
+    const [confirmPassword, setConfirmPassword] = useState('');             // Confirm password state
+    const [loading, setLoading] = useState(false);                    // Form loading state
+    const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);       // Feedback message
+
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -30,12 +31,13 @@ function ResetPasswordForm() {
         setLoading(true);
         setMessage(null);
 
-        try {
+        try {                                               // Submit new password to the reset-password API
             const res = await fetch('/api/reset-password', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ token, password }),
             });
+
 
             if (res.ok) {
                 setMessage({ type: 'success', text: 'Password reset successfully!' });

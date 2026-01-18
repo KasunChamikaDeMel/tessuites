@@ -4,7 +4,8 @@ import { useState } from 'react';
 import Image from 'next/image';
 
 export function Hero() {
-    const [mode, setMode] = useState<'simple' | 'advanced'>('simple');
+    const [mode, setMode] = useState<'simple' | 'advanced'>('simple');          // toggle between input modes
+
     return (
         <section className="relative w-full pt-20 pb-20 bg-white flex flex-col items-center justify-center">
             <div className="absolute top-0 left-0 w-full h-full">

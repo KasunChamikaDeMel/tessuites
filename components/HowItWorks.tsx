@@ -1,5 +1,6 @@
 import Image from 'next/image';
 
+
 export function HowItWorks() {
     return (
         <section id="how-it-works" className="py-24 bg-white">
@@ -9,8 +10,9 @@ export function HowItWorks() {
                 </h2>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
-                    {steps.map((step, index) => (
+                    {steps.map((step, index) => (                          // Render each step dynamically
                         <div key={index} className="flex flex-col items-center text-center">
+
                             <div className="relative w-64 h-64 mb-8 flex items-center justify-center">
                                 <Image src={step.image} alt={step.title} width={400} height={400} className="object-contain" />
                             </div>

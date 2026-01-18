@@ -5,25 +5,27 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 export default function RegisterPage() {
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [showPassword, setShowPassword] = useState(false);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState('');
-    const router = useRouter();
+    const [name, setName] = useState('');                   // Name input state
+    const [email, setEmail] = useState('');                 // Email
+    const [password, setPassword] = useState('');           // Password
+    const [showPassword, setShowPassword] = useState(false); // password visibility
+    const [loading, setLoading] = useState(false);           // Form submission
+    const [error, setError] = useState('');                 // Error message
+    const router = useRouter();                              // redirection
+
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
         setError('');
 
-        try {
+        try {                                               // Send registration data to the local API
             const res = await fetch('/api/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ name, email, password }),
             });
+
 
             if (res.ok) {
                 router.push('/login');

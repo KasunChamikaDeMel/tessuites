@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 export function Footer() {
+
     return (
         <footer className="bg-[#030D16] text-white py-20">
             <div className="container mx-auto px-6 max-w-7xl">

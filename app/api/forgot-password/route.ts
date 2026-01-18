@@ -16,14 +16,12 @@ export async function POST(req: Request) {
             where: { email }
         });
 
-        // We return OK even if user doesn't exist for security (prevent enumeration)
-        if (!existingUser) {
+        if (!existingUser) {                // Return OK even if user doesn't exist for security
             return NextResponse.json({ message: "Reset link sent" });
         }
 
-        // Generate token
-        const resetToken = crypto.randomBytes(32).toString('hex');
-        const tokenExpiry = new Date(Date.now() + 3600 * 1000); // 1 hour
+        const resetToken = crypto.randomBytes(32).toString('hex');          // Generate token
+        const tokenExpiry = new Date(Date.now() + 3600 * 1000);
 
         await prisma.passwordResetToken.create({
             data: {
@@ -33,13 +31,10 @@ export async function POST(req: Request) {
             }
         });
 
-        // Send real email using Resend
         try {
             await sendPasswordResetEmail(email, resetToken);
         } catch (mailError) {
             console.error("Failed to send reset email:", mailError);
-            // We still return success to the user for security, 
-            // but we log the error internally.
         }
 
         return NextResponse.json({ message: "Reset link sent" });

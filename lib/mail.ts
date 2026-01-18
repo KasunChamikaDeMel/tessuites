@@ -1,17 +1,18 @@
-import { Resend } from "resend";
+import { Resend } from "resend";                // Email service provider
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY);           // API key
+const domain = process.env.NEXT_PUBLIC_APP_URL;                  // Base URL
 
-const domain = process.env.NEXT_PUBLIC_APP_URL;
 
 export const sendPasswordResetEmail = async (email: string, token: string) => {
-    const resetLink = `${domain}/reset-password?token=${token}`;
+  const resetLink = `${domain}/reset-password?token=${token}`;                       // Construct reset URL
 
-    await resend.emails.send({
-        from: "onboarding@resend.dev",
-        to: email,
-        subject: "Reset your password",
-        html: `
+
+  await resend.emails.send({
+    from: "onboarding@resend.dev",
+    to: email,
+    subject: "Reset your password",
+    html: `
       <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e5e7eb; rounded: 8px;">
         <h2 style="color: #111827; font-size: 24px; font-weight: 600; margin-bottom: 16px;">Reset your password</h2>
         <p style="color: #4b5563; font-size: 16px; line-height: 24px; margin-bottom: 24px;">
@@ -29,5 +30,5 @@ export const sendPasswordResetEmail = async (email: string, token: string) => {
         </p>
       </div>
     `,
-    });
+  });
 };

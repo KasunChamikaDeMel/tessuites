@@ -1,6 +1,8 @@
 import Image from 'next/image';
 
+
 export function WhyDifferent() {
+
     return (
         <section className="py-24 bg-white overflow-hidden">
             <div className="container mx-auto px-6 max-w-7xl">

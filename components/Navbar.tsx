@@ -3,7 +3,8 @@ import Image from 'next/image';
 import { auth, signOut } from '@/lib/auth';
 
 export async function Navbar() {
-    const session = await auth();
+    const session = await auth();                   // Fetch current user session - Server
+
     return (
         <div className="w-full sticky top-0 z-50">
             <nav className="flex items-center justify-between px-6 py-4 bg-slate-950 border-b border-white/5">
@@ -29,10 +30,11 @@ export async function Navbar() {
                         {session ? (
                             <div className="flex items-center gap-3">
                                 <span className="text-sm text-white font-medium">Hello, {session.user?.name || session.user?.email}</span>
-                                <form action={async () => {
+                                <form action={async () => {                // Server Action for sign out
                                     'use server';
                                     await signOut();
                                 }}>
+
                                     <button className="px-5 py-2 text-sm font-medium text-white border border-white rounded-full hover:bg-white/5 hover:border-gray-500 hover:text-white transition-all active:translate-y-[1px]">
                                         Sign Out
                                     </button>
