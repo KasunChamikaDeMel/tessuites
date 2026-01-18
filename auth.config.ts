@@ -1,51 +1,25 @@
-import Google from "next-auth/providers/google"
-import MicrosoftEntraId from "next-auth/providers/microsoft-entra-id"
-import Credentials from "next-auth/providers/credentials"
 import type { NextAuthConfig } from "next-auth"
-import { prisma } from "@/lib/prisma"
-import bcrypt from "bcryptjs"
 
 export default {
-    providers: [
-        Google({
-            clientId: process.env.GOOGLE_CLIENT_ID,
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-            allowDangerousEmailAccountLinking: true,
-        }),
-        MicrosoftEntraId,
-        Credentials({
-            name: "Credentials",
-            credentials: {
-                email: { label: "Email", type: "email" },
-                password: { label: "Password", type: "password" }
-            },
-            authorize: async (credentials) => {
-                if (!credentials?.email || !credentials?.password) {
-                    return null;
-                }
-
-                const email = credentials.email as string;
-                const password = credentials.password as string;
-
-                const user = await prisma.user.findUnique({
-                    where: { email },
-                });
-
-                if (!user || !user.password) {
-                    return null;
-                }
-
-                const isValid = await bcrypt.compare(password, user.password);
-
-                if (!isValid) {
-                    return null;
-                }
-
-                return user;
-            }
-        })
-    ],
+    providers: [], // Providers are added in lib/auth.ts to keep middleware small
     pages: {
         signIn: '/login',
-    }
+    },
+    callbacks: {
+        authorized({ auth, request: { nextUrl } }) {
+            const isLoggedIn = !!auth?.user;
+            const isAuthPage = nextUrl.pathname.startsWith('/login') ||
+                nextUrl.pathname.startsWith('/register') ||
+                nextUrl.pathname.startsWith('/forgot-password') ||
+                nextUrl.pathname.startsWith('/reset-password');
+
+            // If the user is logged in and tries to access auth pages, redirect to home
+            if (isAuthPage) {
+                if (isLoggedIn) return Response.redirect(new URL('/', nextUrl));
+                return true;
+            }
+
+            return true; // For now, allow access to all other pages
+        },
+    },
 } satisfies NextAuthConfig
