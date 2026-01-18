@@ -131,7 +131,7 @@ export default function LoginPage() {
                                     </div>
                                     <span className="text-xs text-gray-500 font-medium">Keep me signed in</span>
                                 </label>
-                                <Link href="#" className="text-xs font-medium text-[#7D79E6]">
+                                <Link href="/forgot-password" className="text-xs font-medium text-[#7D79E6]">
                                     Forgot password?
                                 </Link>
                             </div>

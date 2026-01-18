@@ -10,7 +10,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     adapter: PrismaAdapter(prisma),
     session: { strategy: "jwt" },
     providers: [
-        Google,
+        Google({
+            clientId: process.env.GOOGLE_CLIENT_ID,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        }),
         MicrosoftEntraId,
         Credentials({
             name: "Credentials",
