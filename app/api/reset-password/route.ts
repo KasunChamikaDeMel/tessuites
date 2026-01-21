@@ -17,16 +17,16 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: "Invalid token" }, { status: 400 });
         }
         if (resetToken.expires < new Date()) {
-            return NextResponse.json({ error: "Token expired" }, { status: 400 });
+            return NextResponse.json({ error: "Token expired" }, { status: 400 });       // after 1hr
         }
 
-        const hashedPassword = await bcrypt.hash(password, 10);       // Hash new password
-        await prisma.user.update({                            // Update user's password in the database
+        const hashedPassword = await bcrypt.hash(password, 10);           // encrypt new password
+        await prisma.user.update({                                        // Update database
             where: { email: resetToken.email },
             data: { password: hashedPassword }
         });
 
-        await prisma.passwordResetToken.delete({                // Delete token so it can't be reused
+        await prisma.passwordResetToken.delete({                // Delete token (one time use)
             where: { id: resetToken.id }
         });
         return NextResponse.json({ message: "Password updated successfully" });

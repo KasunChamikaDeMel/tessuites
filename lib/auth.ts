@@ -1,4 +1,4 @@
-import NextAuth from "next-auth"                                             // NextAuth library
+import NextAuth from "next-auth"
 import { PrismaAdapter } from "@auth/prisma-adapter"                 // Bridge between NextAuth and Prisma
 import Google from "next-auth/providers/google"
 import MicrosoftEntraId from "next-auth/providers/microsoft-entra-id"
@@ -44,8 +44,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
                     return null;
                 }
 
-                // Compare provided password with hashed password in DB
-                const isValid = await bcrypt.compare(password, user.password);
+                const isValid = await bcrypt.compare(password, user.password);        // Compare provided password with hashed password in DB
 
                 if (!isValid) {
                     return null;

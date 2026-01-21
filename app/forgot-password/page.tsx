@@ -5,16 +5,16 @@ import { useState } from 'react';
 
 export default function ForgotPasswordPage() {
     const [email, setEmail] = useState('');                         // Email input state
-    const [loading, setLoading] = useState(false);                     // Loading state for form submission
+    const [loading, setLoading] = useState(false);                     // Disable / enable button
     const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);       // Feedback message state
 
 
     const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
+        e.preventDefault();                      // stop refresh browser
         setLoading(true);
         setMessage(null);
 
-        try {                                  // Send request to forgot-password API
+        try {                                  // API request
             const res = await fetch('/api/forgot-password', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -22,7 +22,7 @@ export default function ForgotPasswordPage() {
             });
 
 
-            if (res.ok) {
+            if (res.ok) {                                                  // API response / UI message
                 setMessage({ type: 'success', text: 'A reset link has been sent.' });
             } else {
                 setMessage({ type: 'error', text: 'Something went wrong. Please try again.' });
